@@ -8,9 +8,26 @@ interface ScheduleListProps {
   onBack?: () => void;
 }
 
-// Alterado para o fuso horário de Amsterdã
-const getAmsterdamDate = (baseDate: Date = new Date()) => {
-  return new Date(baseDate.toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' }));
+// Corrigido: Calcular data e dia corretamente para Amsterdã
+const getAmsterdamDate = () => {
+  const now = new Date();
+  
+  // Obter a data e hora atuais em Amsterdã
+  const amsterdamTime = new Date(now.toLocaleString('en-US', { 
+    timeZone: 'Europe/Amsterdam' 
+  }));
+  
+  return amsterdamTime;
+};
+
+const getAmsterdamDayOfWeek = () => {
+  const amsterdamDate = getAmsterdamDate();
+  return amsterdamDate.getDay(); // 0 = domingo, 1 = segunda, etc.
+};
+
+const getAmsterdamTimeInMinutes = () => {
+  const amsterdamDate = getAmsterdamDate();
+  return amsterdamDate.getHours() * 60 + amsterdamDate.getMinutes();
 };
 
 // Alterado para formato 24h (padrão holandês)
@@ -97,11 +114,16 @@ const dayMeta = ['ZO', 'MA', 'DI', 'WO', 'DO', 'VR', 'ZA'];
 
 const ScheduleList: React.FC<ScheduleListProps> = ({ onNavigateToProgram, onBack }) => {
   const [now, setNow] = useState(getAmsterdamDate());
-  const [selectedDay, setSelectedDay] = useState(getAmsterdamDate().getDay());
+  const [selectedDay, setSelectedDay] = useState(getAmsterdamDayOfWeek());
+  const [nowMinutes, setNowMinutes] = useState(getAmsterdamTimeInMinutes());
   const listContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => setNow(getAmsterdamDate()), 30000);
+    const timer = setInterval(() => {
+      setNow(getAmsterdamDate());
+      setSelectedDay(getAmsterdamDayOfWeek());
+      setNowMinutes(getAmsterdamTimeInMinutes());
+    }, 30000); // Atualiza a cada 30 segundos
     return () => clearInterval(timer);
   }, []);
 
@@ -116,7 +138,6 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ onNavigateToProgram, onBack
       return {
         value: i,
         dayLabel: dayMeta[i],
-        // Alterado para formato holandês
         dateLabel: date
           .toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
           .toUpperCase(),
@@ -160,8 +181,6 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ onNavigateToProgram, onBack
   }, [currentSchedule]);
 
   const isLiveNow = (startStr: string, endStr: string) => {
-    if (selectedDay !== now.getDay()) return false;
-
     const [sH, sM] = startStr.split(':').map(Number);
     const [eH, eM] = endStr.split(':').map(Number);
 
@@ -170,14 +189,11 @@ const ScheduleList: React.FC<ScheduleListProps> = ({ onNavigateToProgram, onBack
 
     if (end === 0 || end <= start) end = 24 * 60;
 
-    const nowMinutes = now.getHours() * 60 + now.getMinutes();
     return nowMinutes >= start && nowMinutes < end;
   };
 
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-
   useEffect(() => {
-    if (selectedDay !== now.getDay()) return;
+    if (selectedDay !== getAmsterdamDayOfWeek()) return;
 
     const scrollTimer = setTimeout(() => {
       const liveElement = document.querySelector('[data-live="true"]');
