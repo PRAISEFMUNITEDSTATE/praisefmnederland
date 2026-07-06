@@ -18,10 +18,10 @@ const IMAGES = {
   LIEKE_AARNINK: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782874296/lieke-aarnink_x9qyzx.webp',
   MARTIEN_HOLTERMAN: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782874294/martien-holterman_ckagup.webp',
   KATRIEN_VAN_EIJK: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1783355141/katrien_van_eijk_pyharm.webp',
-  WORSHIP: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1783355570/worship_ycbutw.webp'
+  WORSHIP: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782875288/WHITENL_xepgma.webp'
 }
 
-// Programação de segunda a sábado (dias 1-6)
+// Programação de SEGUNDA a SÁBADO (dias 1-6)
 const weekday: Program[] = [
   {
     id: 'nachtgenade',
@@ -124,7 +124,7 @@ const weekday: Program[] = [
   }
 ]
 
-// Programação de domingo (dia 0)
+// Programação de DOMINGO (dia 0)
 const sunday: Program[] = [
   {
     id: 'zondag-nachtgenade',
@@ -228,11 +228,11 @@ const sunday: Program[] = [
 ]
 
 export const SCHEDULES: Record<number, Program[]> = {
-  0: sunday,
-  1: weekday,
-  2: weekday,
-  3: weekday,
-  4: weekday,
-  5: weekday,
-  6: weekday
+  0: sunday,      // DOMINGO
+  1: weekday,     // SEGUNDA
+  2: weekday,     // TERÇA
+  3: weekday,     // QUARTA
+  4: weekday,     // QUINTA
+  5: weekday,     // SEXTA
+  6: weekday      // SÁBADO
 }
