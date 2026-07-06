@@ -359,4 +359,16 @@ const EventsPage: React.FC = () => {
       {/* Submit */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-white/5 rounded-xl p-8 text-center">
-          <h3
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Evenement toevoegen</h3>
+          <p className="text-sm text-gray-500 mb-4">Zie een evenement dat hier mist? Stuur ons de details en we voegen het toe.</p>
+          <a href="/submit" className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg text-sm font-bold uppercase tracking-wider transition-colors">Evenement Indienen</a>
+        </div>
+      </div>
+
+    </div>
+
+  );
+
+};
+
+export default EventsPage;
