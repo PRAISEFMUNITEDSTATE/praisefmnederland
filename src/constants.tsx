@@ -18,7 +18,8 @@ const IMAGES = {
   LIEKE_AARNINK: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782874296/lieke-aarnink_x9qyzx.webp',
   MARTIEN_HOLTERMAN: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782874294/martien-holterman_ckagup.webp',
   KATRIEN_VAN_EIJK: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1783355141/katrien_van_eijk_pyharm.webp',
-  WORSHIP: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782875288/WHITENL_xepgma.webp'
+  WORSHIP: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1782875288/WHITENL_xepgma.webp',
+  SUNDAY_SERVICE: 'https://res.cloudinary.com/trjf7ykr/image/upload/v1783361505/sunday-service_yht8o5.jpg'
 }
 
 // Programação de SEGUNDA a SÁBADO (dias 1-6)
@@ -205,7 +206,7 @@ const sunday: Program[] = [
     startTime: '20:00',
     endTime: '21:00',
     description: 'Een gefocuste boodschap van geloof, hoop en bemoediging.',
-    image: IMAGES.WORSHIP
+    image: IMAGES.SUNDAY_SERVICE  // ✅ ALTERADO AQUI
   },
   {
     id: 'zondag-praise-fm-classics',
