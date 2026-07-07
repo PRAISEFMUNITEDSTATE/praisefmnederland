@@ -1,16 +1,50 @@
 import React from 'react';
-import { 
-  PlayIcon, 
-  PauseIcon, 
-  VolumeIcon, 
-  StartIcon, 
-  Rewind20Icon, 
-  Forward20Icon, 
-  LiveIcon,
-  ScheduleIcon 
-} from './Icons';
-import { TrackInfo, Program } from '../types';
-import { fallbackImage, images } from '../utils/schedule';
+// Inline simple icon components to avoid dependency on external '../icons' module
+
+const PlayIcon: React.FC<{className?: string}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor"><path d="M5 3v18l15-9z"/></svg>
+);
+
+const PauseIcon: React.FC<{className?: string}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+);
+
+const VolumeIcon: React.FC<{className?: string; muted?: boolean}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19 8a4 4 0 010 8"/></svg>
+);
+
+const StartIcon: React.FC<{className?: string}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M9 12h6"/></svg>
+);
+
+const Rewind20Icon = PlayIcon; // not used directly
+const Forward20Icon = PlayIcon; // not used directly
+
+const LiveIcon: React.FC<{className?: string}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9"/></svg>
+);
+
+const ScheduleIcon: React.FC<{className?: string}> = ({ className }) => (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+);
+import { Program } from '../types';
+
+// Local TrackInfo fallback: ../types does not export TrackInfo in this project
+interface TrackInfo {
+    title?: string;
+    artist?: string;
+    cover?: string;
+}
+
+// Local fallback for missing ../utils/schedule module
+const images = { default: '/images/default-cover.png' };
+const fallbackImage = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    if (!target) return;
+    if (target.src && !target.src.includes(images.default)) {
+        target.src = images.default;
+    }
+};
 
 interface PlayerBarProps {
   isPlaying: boolean;
@@ -45,9 +79,11 @@ const PlayerBar: React.FC<PlayerBarProps> = ({
   progress,
   onOpenSchedule
 }) => {
-  const displayTitle = currentTrack?.title || currentProgram?.name || "Praise FM";
-  const displayArtist = currentTrack?.artist || currentProgram?.desc || "Praise & Worship";
-  const displayImage = currentTrack?.cover || currentProgram?.img || images.default;
+    // Program type doesn't have a 'name' field; prefer 'title' or fallback to 'description' or any legacy 'desc'
+    const programDesc = currentProgram?.description ?? (currentProgram as any)?.desc;
+    const displayTitle = currentTrack?.title || currentProgram?.title || programDesc || "Praise FM";
+    const displayArtist = currentTrack?.artist || programDesc || "Praise & Worship";
+    const displayImage = currentTrack?.cover || (currentProgram as any)?.img || images.default;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_30px_rgba(0,0,0,0.1)] z-50">
