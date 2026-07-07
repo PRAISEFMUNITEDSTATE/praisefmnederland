@@ -105,9 +105,9 @@ const PlayerBar: React.FC<PlayerBarProps> = ({
                     onError={fallbackImage}
                 />
                  {/* Badge com número 3 (era 1) */}
-                <div className="absolute -bottom-1 -right-1 bg-black text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
-                    3
-                </div>
+                   <div className="absolute -bottom-1 -right-1 bg-black text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
+                        3
+            </div>
             </div>
             <div className="flex flex-col overflow-hidden">
                 <span className="font-extrabold text-sm md:text-base text-gray-900 truncate">
