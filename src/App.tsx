@@ -245,7 +245,7 @@ const HomeBBC = ({
               </div>
 
               <div className="absolute -right-3 bottom-1 w-16 h-16 rounded-full bg-black text-white flex items-center justify-center text-4xl font-black border-4 border-white dark:border-[#121212] shadow-lg">
-                1
+                3
               </div>
             </div>
 
