@@ -10,6 +10,7 @@ import {
 
 import { Play, Pause, Megaphone } from 'lucide-react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -610,6 +611,7 @@ export default function App() {
       <ScrollToTop />
       <AppContent />
       <SpeedInsights />
+      <Analytics />
     </BrowserRouter>
   )
 }
